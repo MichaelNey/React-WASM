@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
 import './App.scss';
 
-import { hash } from './util/hash';
+import { createFibonacci } from './util/fibonacci';
 
 function App() {
 
-  const [jsRepeatNum, setJSRepeatNum] = useState(1);
-  const [wasmRepeatNum, setWASMRepeatNum] = useState(1);
-  const [jsRepeatResult, setJSRepeatResult] = useState(1);
-  const [wasmRepeatResult, setWASMRepeatResult] = useState(1);
+  const [jsNum, setJSNum] = useState(1);
+  const [wasmNum, setWASMNum] = useState(1);
+  const [jsRepeatResult, setJSRepeatResult] = useState("N/A");
+  const [wasmRepeatResult, setWASMRepeatResult] = useState("N/A");
 
   // Validates the numbers put into the inputs because we use a text input.
   // Text input is used purely due to personal preference.
-  function handleRepeatNumberInput(value, callback) {
+  function handleNumberInput(value, callback) {
     let inputNumber = Number(value);
     if(isNaN(inputNumber)) return;
 
     if(inputNumber < 1) {
       inputNumber = 1;
-    } else if(inputNumber > 19283746) {
-      inputNumber = 19283746;
+    } else if(inputNumber > 100) {
+      inputNumber = 100;
     }
 
     callback(inputNumber);
@@ -27,10 +27,18 @@ function App() {
 
   function jsRepeat() {
     let startTime = Date.now();
-    let result = hash("WASM is cool",jsRepeatNum);
+    let result = createFibonacci(jsNum);
     let endTime = Date.now();
-    console.log(`Hash of WASM is cool with the repeat count of is ${result}. \n Finished in ${(endTime - startTime) / 1000} seconds.`);
-    setJSRepeatResult(result);
+    console.log(`${jsNum} into Fibonacci(JS) is ${result}. \n Finished in ${(endTime - startTime) / 1000} seconds.`);
+    setJSRepeatResult(`${(endTime - startTime) / 1000} seconds`);
+  }
+
+  function wasmRepeat() {
+    let startTime = Date.now();
+    let result = window._createFibonacci(wasmNum);
+    let endTime = Date.now();
+    console.log(`${wasmNum} into Fibonacci(C Compiled into WASM) is ${result}. \n Finished in ${(endTime - startTime) / 1000} seconds.`);
+    setWASMRepeatResult(`${(endTime - startTime) / 1000} seconds`);
   }
 
   return (
@@ -41,8 +49,8 @@ function App() {
           <h2>Javascript</h2>
           <hr />
           <div className="input-box">
-            <label>Repeat Count: </label>
-            <input type="text" value={jsRepeatNum} onChange={(e) => handleRepeatNumberInput(e.target.value, setJSRepeatNum)} />
+            <label>Hash Cycles: </label>
+            <input type="text" value={jsNum} onChange={(e) => handleNumberInput(e.target.value, setJSNum)} />
           </div>
           <button onClick={jsRepeat}>Get Result</button>
           <div className="input-box">
@@ -54,10 +62,10 @@ function App() {
           <h2>Web Assembly</h2>
           <hr />
           <div className="input-box">
-            <label>Repeat Count: </label>
-            <input type="text" value={wasmRepeatNum} onChange={(e) => handleRepeatNumberInput(e.target.value, setWASMRepeatNum)} />
+            <label>Hash Cycles: </label>
+            <input type="text" value={wasmNum} onChange={(e) => handleNumberInput(e.target.value, setWASMNum)} />
           </div>
-          <button>Get Result</button>
+          <button onClick={wasmRepeat}>Get Result</button>
           <div className="input-box">
             <label>Result: </label>
             <strong>{wasmRepeatResult}</strong>
