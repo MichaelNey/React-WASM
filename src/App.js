@@ -20,8 +20,8 @@ function App() {
 
     if(inputNumber < 1) {
       inputNumber = 1;
-    } else if(inputNumber > 100) {
-      inputNumber = 100;
+    } else if(inputNumber > 50) {
+      inputNumber = 50;
     }
 
     callback(inputNumber);
