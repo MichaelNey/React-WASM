@@ -1,56 +1,74 @@
 import React, { useState } from 'react';
 import './App.scss';
 
+import { createFibonacci } from './util/fibonacci';
+
 function App() {
 
-  const [jsFactorialNum, setJSFactorialNum] = useState(1);
-  const [wasmFactorialNum, setWASMFactorialNum] = useState(1);
-  const [jsFactorialResult, setJSFactorialResult] = useState(1);
-  const [wasmFactorialResult, setWASMFactorialResult] = useState(1);
+  const [jsNum, setJSNum] = useState(1);
+  const [wasmNum, setWASMNum] = useState(1);
+  const [jsRepeatResult, setJSRepeatResult] = useState("N/A");
+  const [wasmRepeatResult, setWASMRepeatResult] = useState("N/A");
 
   // Validates the numbers put into the inputs because we use a text input.
   // Text input is used purely due to personal preference.
-  function handleFactorialNumberInput(value, callback) {
+  function handleNumberInput(value, callback) {
     let inputNumber = Number(value);
     if(isNaN(inputNumber)) return;
 
     if(inputNumber < 1) {
       inputNumber = 1;
-    } else if(inputNumber > 99999) {
-      inputNumber = 99999;
+    } else if(inputNumber > 100) {
+      inputNumber = 100;
     }
 
     callback(inputNumber);
   }
 
+  function jsRepeat() {
+    let startTime = Date.now();
+    let result = createFibonacci(jsNum);
+    let endTime = Date.now();
+    console.log(`${jsNum} into Fibonacci(JS) is ${result}. \n Finished in ${(endTime - startTime) / 1000} seconds.`);
+    setJSRepeatResult(`${(endTime - startTime) / 1000} seconds`);
+  }
+
+  function wasmRepeat() {
+    let startTime = Date.now();
+    let result = window._createFibonacci(wasmNum);
+    let endTime = Date.now();
+    console.log(`${wasmNum} into Fibonacci(C Compiled into WASM) is ${result}. \n Finished in ${(endTime - startTime) / 1000} seconds.`);
+    setWASMRepeatResult(`${(endTime - startTime) / 1000} seconds`);
+  }
+
   return (
     <div className="App">
-      <h1>React WASM Factorial</h1>
+      <h1>React WASM Comparison</h1>
       <div className="js-vs-wasm">
         <div className="js">
           <h2>Javascript</h2>
           <hr />
           <div className="input-box">
-            <label>Factorialize: </label>
-            <input type="text" value={jsFactorialNum} onChange={(e) => handleFactorialNumberInput(e.target.value, setJSFactorialNum)} />
+            <label>Hash Cycles: </label>
+            <input type="text" value={jsNum} onChange={(e) => handleNumberInput(e.target.value, setJSNum)} />
           </div>
-          <button>Get Result</button>
+          <button onClick={jsRepeat}>Get Result</button>
           <div className="input-box">
             <label>Result: </label>
-            <strong>{jsFactorialResult}</strong>
+            <strong>{jsRepeatResult}</strong>
           </div>
         </div>
         <div className="wasm">
           <h2>Web Assembly</h2>
           <hr />
           <div className="input-box">
-            <label>Factorialize: </label>
-            <input type="text" value={wasmFactorialNum} onChange={(e) => handleFactorialNumberInput(e.target.value, setWASMFactorialNum)} />
+            <label>Hash Cycles: </label>
+            <input type="text" value={wasmNum} onChange={(e) => handleNumberInput(e.target.value, setWASMNum)} />
           </div>
-          <button>Get Result</button>
+          <button onClick={wasmRepeat}>Get Result</button>
           <div className="input-box">
             <label>Result: </label>
-            <strong>{wasmFactorialResult}</strong>
+            <strong>{wasmRepeatResult}</strong>
           </div>
         </div>
       </div>
