@@ -1,0 +1,110 @@
+html {
+  background-color: #344e83;
+  font-size: 62.5%;
+  color: rgb(224, 224, 224);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+.App {
+  text-align: center;
+  font-size: 1.6rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  h1 {
+    width: 100%;
+    background-color: #3d6dce;
+    padding: 16px;
+    margin: 0;
+  }
+}
+
+.js-vs-wasm {
+  width: 50%;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  
+  div {
+    width: 45%;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    margin-top: 32px;
+    border: 1px solid #3d6dce;
+    border-radius: 4px;
+    background-color: #cbd1dd;
+    color: #3a4966;
+    box-shadow: 1px 0px 4px 1px rgb(48, 48, 48);
+
+    h2, p {
+      width: 100%;
+      text-align: center;
+      margin: 6px;
+      margin-top: 16px;
+    }
+
+    hr {
+      width: 100%;
+    }
+
+    input {
+      box-shadow: 1px 1px 2px 0px rgb(48, 48, 48);
+      width: 25%;
+      text-align: center;
+      transition: outline .3s;
+      border: 1px solid #3a4966;
+      outline: 1px solid rgba(0, 0, 0, 0);
+
+      &:focus {
+        outline: 1px solid #5b76ad;
+      }
+    }
+
+    .input-box {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      box-shadow: none;
+      border: none;
+      align-items: center;
+      margin-top: 0;
+
+      input, label, strong {
+        margin: 6px;
+        font-size: 2.2rem;
+      }
+    }
+
+    button {
+      margin: 6px auto;
+      border: 1px solid #5b76ad;
+      border-radius: 4px;
+      background-color: #3d6dce;
+      box-shadow: 0px 0px 4px rgb(48, 48, 48);
+      color: #ffffff;
+      font-size: 1.8rem;
+      padding: 6px;
+      width: 80%;
+      transition: all .3s;
+
+      &:hover {
+        border: 1px solid #95b0e6;
+        border-radius: 4px;
+        background-color: #2b55a8;
+        box-shadow: 0px 0px 4px rgb(48, 48, 48);
+        color: #ffffff;
+        cursor: pointer;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
